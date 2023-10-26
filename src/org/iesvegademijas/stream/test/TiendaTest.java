@@ -123,7 +123,7 @@ class TiendaTest {
 			
 			//TODO STREAMS
 
-			List<String> listaNombrePrecio=	listProd.stream().map(p -> "Nombre: " + p.getNombre() + ", Precio " + p.getPrecio()).collect(Collectors.toList());
+			List<String> listaNombrePrecio=	listProd.stream().map(p -> "Nombre: " + p.getNombre() + ", Precio " + p.getPrecio()).toList();
 
 			listaNombrePrecio.forEach(n -> System.out.println(n));
 	
