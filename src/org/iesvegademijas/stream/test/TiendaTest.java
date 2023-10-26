@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
@@ -31,7 +32,7 @@ class TiendaTest {
 	
 			List<Fabricante> listFab = fabHome.findAll();
 		
-			
+
 			//TODO STREAMS
 			
 		
@@ -52,10 +53,13 @@ class TiendaTest {
 			prodHome.beginTransaction();
 		
 			List<Producto> listProd = prodHome.findAll();		
-						
+
 			//TODO STREAMS
-		
+
+
 			prodHome.commitTransaction();
+
+
 		}
 		catch (RuntimeException e) {
 			prodHome.rollbackTransaction();
@@ -118,6 +122,10 @@ class TiendaTest {
 			List<Producto> listProd = prodHome.findAll();
 			
 			//TODO STREAMS
+
+			List<String> listaNombrePrecio=	listProd.stream().map(p -> "Nombre: " + p.getNombre() + ", Precio " + p.getPrecio()).collect(Collectors.toList());
+
+			listaNombrePrecio.forEach(n -> System.out.println(n));
 	
 			
 			prodHome.commitTransaction();
