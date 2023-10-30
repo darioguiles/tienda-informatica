@@ -1110,7 +1110,10 @@ Fabricante: Xiaomi
 			List<Producto> listProd = prodHome.findAll();		
 						
 			//TODO STREAMS
-			
+
+			Double resultado = null;
+
+			System.out.println(resultado);
 			prodHome.commitTransaction();
 		}
 		catch (RuntimeException e) {
