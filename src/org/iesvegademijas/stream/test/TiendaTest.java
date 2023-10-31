@@ -1102,8 +1102,8 @@ Fabricante: Xiaomi
 	 */
 	@Test
 	void test32() {
-	
-		ProductoHome prodHome = new ProductoHome();	
+
+		ProductoHome prodHome = new ProductoHome();
 		try {
 			prodHome.beginTransaction();
 		
@@ -1111,9 +1111,14 @@ Fabricante: Xiaomi
 						
 			//TODO STREAMS
 
-			Double resultado = null;
+			double mediaPrecio = listProd.stream()
+					.mapToDouble(Producto::getPrecio)
+					.average()
+					.orElse(0.0);
 
-			System.out.println(resultado);
+			System.out.println("Media del precio de todos los productos: " + mediaPrecio);
+
+
 			prodHome.commitTransaction();
 		}
 		catch (RuntimeException e) {
@@ -1136,6 +1141,13 @@ Fabricante: Xiaomi
 			List<Producto> listProd = prodHome.findAll();		
 						
 			//TODO STREAMS
+
+			double precioMasBarato = listProd.stream()
+					.mapToDouble(Producto::getPrecio)
+					.min()
+					.orElse(0.0);
+
+			System.out.println("Precio más barato de todos los productos: " + precioMasBarato);
 			
 			prodHome.commitTransaction();
 		}
@@ -1159,7 +1171,14 @@ Fabricante: Xiaomi
 			List<Producto> listProd = prodHome.findAll();		
 						
 			//TODO STREAMS
-			
+
+			double sumaPrecio = listProd.stream()
+					.mapToDouble(Producto::getPrecio)
+					.sum();
+
+			System.out.println("Suma del precio de todos los productos: " + sumaPrecio);
+
+
 			prodHome.commitTransaction();
 		}
 		catch (RuntimeException e) {
@@ -1182,6 +1201,12 @@ Fabricante: Xiaomi
 			List<Producto> listProd = prodHome.findAll();		
 						
 			//TODO STREAMS
+
+			long numFab = listProd.stream()
+					.filter(p -> p.getFabricante().getNombre().equals("Asus"))
+					.count();
+
+			System.out.println("Numero de productos que son de Asus: " + numFab);
 			
 			prodHome.commitTransaction();
 		}
@@ -1205,6 +1230,13 @@ Fabricante: Xiaomi
 			List<Producto> listProd = prodHome.findAll();		
 						
 			//TODO STREAMS
+			double mediaPrecio = listProd.stream()
+					.filter(p -> p.getFabricante().getNombre().equalsIgnoreCase("Asus"))
+					.mapToDouble(Producto::getPrecio)
+					.average()
+					.orElse(0.0);
+
+			System.out.println("Media del precio de todos los productos: " + mediaPrecio);
 			
 			prodHome.commitTransaction();
 		}
@@ -1343,7 +1375,13 @@ Hewlett-Packard              2
 			List<Fabricante> listFab = fabHome.findAll();
 				
 			//TODO STREAMS
-		
+			List<String> lista = listFab.stream()
+					.filter(p -> p.getProductos().size() >=2)
+					.map(p->"Nombre: " + p.getNombre())
+					.toList();
+
+			lista.forEach(p-> System.out.println(p));
+
 			fabHome.commitTransaction();
 		}
 		catch (RuntimeException e) {
@@ -1391,7 +1429,7 @@ Hewlett-Packard              2
 			List<Fabricante> listFab = fabHome.findAll();
 				
 			//TODO STREAMS
-		
+
 			fabHome.commitTransaction();
 		}
 		catch (RuntimeException e) {
